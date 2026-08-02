@@ -219,12 +219,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
             $idxCol = $turn === 'team1' ? 'team1_player_idx' : 'team2_player_idx';
             $newIdx = (int) ($match[$idxCol] ?? 0) + 1;
 
-            /* 更新前の状態を履歴に保存する（「一つ戻す」で復元するため）。 */
+            /* 投擲者を特定する */
+            $activePlayersCurrent = teamPlayers($pdo, $teamId);
+            $activeIdxVal = (int) ($match[$turn === 'team1' ? 'team1_player_idx' : 'team2_player_idx'] ?? 0);
+            $throwerName = $activePlayersCurrent ? $activePlayersCurrent[$activeIdxVal % count($activePlayersCurrent)] : null;
+            $pinsHitStr = !empty($fallen) ? implode(',', array_keys($fallen)) : '';
+
+            /* 更新前の状態＋投球結果を履歴に保存する（「一つ戻す」および実況ログ用）。 */
             $snap = $pdo->prepare(
                 "INSERT INTO `molkky_throws`
                  (match_id, team1_score, team2_score, team1_misses, team2_misses,
-                  team1_player_idx, team2_player_idx, current_turn, status, winner_team_id)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                  team1_player_idx, team2_player_idx, current_turn, status, winner_team_id,
+                  player_name, points_scored, pins_hit)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
             );
             $snap->execute([
                 $matchId,
@@ -233,6 +240,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
                 (int) ($match['team1_player_idx'] ?? 0), (int) ($match['team2_player_idx'] ?? 0),
                 $match['current_turn'] ?? 'team1', $match['status'],
                 $match['winner_team_id'] !== null ? (int) $match['winner_team_id'] : null,
+                $throwerName,
+                $points,
+                $pinsHitStr
             ]);
 
             $stmt = $pdo->prepare(
@@ -242,6 +252,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
                  WHERE id = ?"
             );
             $stmt->execute([$newScore, $newMisses, $winnerId, $status, $nextTurn, $newIdx, $matchId]);
+
+            /* ノックアウト大会の勝者自動進出＆3位決定戦敗者進出処理 */
+            if ($status === 'finished' && $winnerId) {
+                $loserId = ($winnerId === $teamId) ? $opponentId : $teamId;
+
+                /* 次のラウンドの試合へ進出 */
+                if (!empty($match['next_match_id'])) {
+                    $nextId = (int) $match['next_match_id'];
+                    $slot = (int) ($match['next_match_slot'] ?? 1);
+                    $slotCol = ($slot === 2) ? 'team2_id' : 'team1_id';
+                    $pdo->prepare("UPDATE `molkky_matches` SET {$slotCol} = ? WHERE id = ?")->execute([$winnerId, $nextId]);
+                }
+
+                /* 3位決定戦へ進出 */
+                if (!empty($match['third_place_match_id']) && $loserId > 0) {
+                    $tpId = (int) $match['third_place_match_id'];
+                    $tpMatch = $pdo->query("SELECT team1_id, team2_id FROM `molkky_matches` WHERE id = $tpId")->fetch(PDO::FETCH_ASSOC);
+                    if ($tpMatch) {
+                        if ((int)$tpMatch['team1_id'] === 0) {
+                            $pdo->prepare("UPDATE `molkky_matches` SET team1_id = ? WHERE id = ?")->execute([$loserId, $tpId]);
+                        } elseif ((int)$tpMatch['team2_id'] === 0) {
+                            $pdo->prepare("UPDATE `molkky_matches` SET team2_id = ? WHERE id = ?")->execute([$loserId, $tpId]);
+                        }
+                    }
+                }
+            }
         }
         header('Location: match.php?id=' . $matchId);
         exit;
@@ -325,6 +361,11 @@ if ($matchId) {
                         <?php if ($lostByMisses): ?>
                             <span class="banner__reason">（相手が<?php echo MAX_MISSES; ?>連続ミス）</span>
                         <?php endif; ?>
+                    </div>
+                    <div class="match-finished-actions">
+                        <button type="button" class="btn-icon" onclick="window.print()" title="印刷">
+                            🖨️ <span class="btn-icon__text">結果を印刷</span>
+                        </button>
                     </div>
                 <?php endif; ?>
 
@@ -420,9 +461,55 @@ if ($matchId) {
                 <?php endif; ?>
             </div>
 
+            <!-- 音声＆効果音・タイマー・QRツールバー -->
+            <div class="card match-tools-card">
+                <div class="match-tools-row">
+                    <div class="match-timer-badge">
+                        ⏱️ 経過時間: <span id="matchTimer">00:00</span>
+                    </div>
+                    <div class="match-audio-controls">
+                        <button type="button" class="btn-sm" id="toggleSoundBtn">🔊 効果音: ON</button>
+                        <button type="button" class="btn-sm" id="toggleSpeechBtn">🗣️ 音声実況: ON</button>
+                        <a href="overlay.php" target="_blank" class="btn-sm">📺 OBS表示</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 実況プレイバイプレイ タイムライン -->
+            <?php
+                $stmtP = $pdo->prepare(
+                    "SELECT player_name, points_scored, pins_hit, team1_score, team2_score, created_at
+                     FROM molkky_throws WHERE match_id = ? AND player_name IS NOT NULL ORDER BY id DESC LIMIT 10"
+                );
+                $stmtP->execute([(int)$currentMatch['id']]);
+                $playLogs = $stmtP->fetchAll(PDO::FETCH_ASSOC);
+            ?>
+            <?php if (!empty($playLogs)): ?>
+                <div class="card">
+                    <h3>📝 投球ログ・実況タイムライン (Play-by-Play)</h3>
+                    <div class="play-by-play-feed">
+                        <?php foreach ($playLogs as $log):
+                            $pts = (int)$log['points_scored'];
+                            $pName = $log['player_name'] ?: '選手';
+                            $pins = $log['pins_hit'];
+                            $detail = $pts === 0 ? 'ミス（0点）' : ($pts > 0 && str_contains($pins, ',') ? "{$pts}本倒し (+{$pts}点)" : "{$pins}番ピン (+{$pts}点)");
+                        ?>
+                            <div class="play-log-item <?php echo $pts === 0 ? 'play-log-item--miss' : ''; ?>">
+                                <span class="play-log-time"><?php echo date('H:i:s', strtotime($log['created_at'])); ?></span>
+                                <span class="play-log-player"><strong><?php echo e($pName); ?></strong></span>
+                                <span class="play-log-detail"><?php echo e($detail); ?></span>
+                                <span class="play-log-score">(スコア: <?php echo $log['team1_score']; ?> - <?php echo $log['team2_score']; ?>)</span>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+
             <div class="links">
                 <a href="match.php">別の試合を始める</a>
-                <a href="index.php">To Dashboard</a>
+                <a href="history.php">試合履歴</a>
+                <a href="standings.php">順位表</a>
+                <a href="index.php">ダッシュボードへ</a>
             </div>
 
         <?php else: ?>
@@ -453,34 +540,92 @@ if ($matchId) {
             </div>
 
             <div class="links">
-                <a href="index.php">To Dashboard</a>
+                <a href="index.php">ダッシュボードへ</a>
             </div>
         <?php endif; ?>
     </div>
 
     <script>
-    // 選択したピンからモルックの得点を即時プレビューする（記録はサーバー側で再計算）。
+    // 選択したピンからモルックの得点を即時プレビューする
     (function () {
         var form = document.getElementById('throwForm');
-        if (!form) { return; }
         var preview = document.getElementById('scorePreview');
 
-        function update() {
-            var checked = form.querySelectorAll('input[name="pins[]"]:checked');
-            var n = checked.length;
-            if (n === 0) {
-                preview.textContent = '獲得点: 0（ミス）';
-            } else if (n === 1) {
-                var v = parseInt(checked[0].value, 10);
-                preview.textContent = '獲得点: ' + v + '（' + v + '番を1本）';
-            } else {
-                preview.textContent = '獲得点: ' + n + '（' + n + '本倒し）';
+        if (form && preview) {
+            function update() {
+                var checked = form.querySelectorAll('input[name="pins[]"]:checked');
+                var n = checked.length;
+                if (n === 0) {
+                    preview.textContent = '獲得点: 0（ミス）';
+                } else if (n === 1) {
+                    var v = parseInt(checked[0].value, 10);
+                    preview.textContent = '獲得点: ' + v + '（' + v + '番を1本）';
+                } else {
+                    preview.textContent = '獲得点: ' + n + '（' + n + '本倒し）';
+                }
             }
+
+            form.addEventListener('change', update);
+            form.addEventListener('reset', function () { setTimeout(update, 0); });
+            update();
         }
 
-        form.addEventListener('change', update);
-        form.addEventListener('reset', function () { setTimeout(update, 0); });
-        update();
+        // --- 試合タイマー（ストップウォッチ） ---
+        var timerEl = document.getElementById('matchTimer');
+        if (timerEl) {
+            var startTime = localStorage.getItem('molkky_timer_start_' + (location.search || 'default'));
+            if (!startTime) {
+                startTime = Date.now();
+                localStorage.setItem('molkky_timer_start_' + (location.search || 'default'), startTime);
+            }
+            setInterval(function () {
+                var elapsedSec = Math.floor((Date.now() - parseInt(startTime, 10)) / 1000);
+                var mins = String(Math.floor(elapsedSec / 60)).padStart(2, '0');
+                var secs = String(elapsedSec % 60).padStart(2, '0');
+                timerEl.textContent = mins + ':' + secs;
+            }, 1000);
+        }
+
+        // --- 音声効果音 ＆ 音声実況 (Web Audio & Speech API) ---
+        var soundEnabled = localStorage.getItem('molkky_sound') !== 'false';
+        var speechEnabled = localStorage.getItem('molkky_speech') !== 'false';
+
+        var soundBtn = document.getElementById('toggleSoundBtn');
+        var speechBtn = document.getElementById('toggleSpeechBtn');
+
+        function updateBtnStates() {
+            if (soundBtn) soundBtn.textContent = '🔊 効果音: ' + (soundEnabled ? 'ON' : 'OFF');
+            if (speechBtn) speechBtn.textContent = '🗣️ 音声実況: ' + (speechEnabled ? 'ON' : 'OFF');
+        }
+        updateBtnStates();
+
+        if (soundBtn) {
+            soundBtn.addEventListener('click', function () {
+                soundEnabled = !soundEnabled;
+                localStorage.setItem('molkky_sound', soundEnabled);
+                updateBtnStates();
+            });
+        }
+        if (speechBtn) {
+            speechBtn.addEventListener('click', function () {
+                speechEnabled = !speechEnabled;
+                localStorage.setItem('molkky_speech', speechEnabled);
+                updateBtnStates();
+            });
+        }
+
+        // 音声アナウンス（投げる人）
+        var throwingNameEl = document.querySelector('.now-throwing__name');
+        if (throwingNameEl && speechEnabled && 'speechSynthesis' in window) {
+            var pName = throwingNameEl.textContent.trim();
+            if (pName) {
+                var msg = new SpeechSynthesisUtterance('次は ' + pName + ' さんの番です');
+                msg.lang = 'ja-JP';
+                msg.rate = 1.0;
+                window.speechSynthesis.cancel();
+                window.speechSynthesis.speak(msg);
+            }
+        }
     })();
     </script>
 </body>

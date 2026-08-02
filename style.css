@@ -1115,3 +1115,1325 @@ button[type="submit"]:not(.link-btn):not(.btn-add):not(.miss-record-btn):not(.bt
     filter: brightness(1.08);
     box-shadow: 0 8px 20px rgba(32, 87, 32, 0.36);
 }
+
+/* ==========================================================================
+   拡張機能用のスタイル
+   ========================================================================== */
+
+/* 広めのコンテンツ幅（順位表・履歴用） */
+.content_box--wide {
+    max-width: 820px;
+}
+
+/* --- テーブルツールバー --- */
+.table-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.table-toolbar h3 {
+    margin: 0;
+}
+
+.table-toolbar__actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* アイコンボタン（印刷・CSV 等） */
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid transparent;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background var(--duration), color var(--duration), border-color var(--duration);
+}
+
+.btn-icon:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+.btn-icon__text {
+    font-size: 0.82rem;
+}
+
+/* 小さなボタン */
+.btn-sm {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid transparent;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background var(--duration), color var(--duration);
+}
+
+.btn-sm:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+.btn-sm--save {
+    background: var(--accent);
+    color: #fff;
+}
+
+.btn-sm--save:hover {
+    background: var(--accent-2);
+}
+
+/* アウトラインボタン */
+.btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 9px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--surface);
+    border: 2px solid var(--accent);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background var(--duration), color var(--duration);
+}
+
+.btn-outline:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* ダッシュボードの追加アクションボタン群 */
+.dashboard-extra-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.dashboard-extra-actions .btn-outline {
+    flex: 1;
+    justify-content: center;
+    min-width: 100px;
+}
+
+/* --- 順位表テーブル --- */
+.table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+}
+
+.standings-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.standings-table th {
+    padding: 12px 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: var(--panel-head);
+    border-bottom: 2px solid var(--border);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.standings-table td {
+    padding: 12px 10px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-soft);
+    transition: background 120ms ease;
+}
+
+.standings-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.standings-table tbody tr:hover td {
+    background: var(--accent-soft);
+}
+
+.col-rank {
+    width: 50px;
+    text-align: center !important;
+    font-weight: 800;
+}
+
+.col-team {
+    text-align: left !important;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.col-num {
+    width: 54px;
+}
+
+.col-rate {
+    width: 60px;
+    font-weight: 700;
+}
+
+.col-wins {
+    color: var(--success);
+    font-weight: 700;
+}
+
+.col-losses {
+    color: #c9821f;
+    font-weight: 700;
+}
+
+.col-diff-pos {
+    color: var(--success);
+    font-weight: 700;
+}
+
+.col-diff-neg {
+    color: #c9821f;
+    font-weight: 700;
+}
+
+.rank-medal {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+tr.rank-gold td {
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.12), rgba(255, 215, 0, 0.03));
+}
+
+tr.rank-silver td {
+    background: linear-gradient(90deg, rgba(192, 192, 192, 0.12), rgba(192, 192, 192, 0.03));
+}
+
+tr.rank-bronze td {
+    background: linear-gradient(90deg, rgba(205, 127, 50, 0.12), rgba(205, 127, 50, 0.03));
+}
+
+/* --- 試合履歴 --- */
+.history-filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--muted);
+    background: var(--bg);
+    border: 1px solid var(--border-soft);
+    text-decoration: none;
+    transition: background var(--duration), color var(--duration), border-color var(--duration);
+}
+
+.filter-chip:hover {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+.filter-chip.is-active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+
+.filter-chip__count {
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.history-item {
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    background: var(--surface);
+    transition: box-shadow 120ms ease;
+}
+
+.history-item:hover {
+    box-shadow: var(--shadow-sm);
+}
+
+.history-item.is-ongoing {
+    border-left: 4px solid var(--accent-2);
+}
+
+.history-item.is-finished {
+    border-left: 4px solid var(--border);
+}
+
+.history-item__status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.status-badge--ongoing {
+    background: var(--success-soft);
+    color: var(--success);
+}
+
+.status-badge--finished {
+    background: var(--bg);
+    color: var(--muted);
+}
+
+.history-item__date {
+    font-size: 0.78rem;
+    color: var(--muted);
+}
+
+.history-item__teams {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 6px;
+}
+
+.history-team {
+    font-weight: 600;
+    font-size: 0.95rem;
+    flex: 1;
+    text-align: center;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.history-team.is-winner {
+    color: var(--accent);
+    font-weight: 800;
+}
+
+.history-score {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: none;
+    font-size: 1.3rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+}
+
+.history-vs {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.history-item__winner {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.history-item__actions {
+    text-align: center;
+}
+
+/* --- チーム編集フォーム --- */
+.team-edit-form {
+    padding: 10px 16px;
+    background: var(--accent-soft);
+    border-bottom: 1px solid var(--border-soft);
+}
+
+.team-edit-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.team-edit-input {
+    flex: 1;
+    padding: 8px 12px !important;
+    font-size: 0.9rem !important;
+    border-radius: 8px !important;
+}
+
+/* --- メンバー入れ替えフォーム --- */
+.swap-form-container {
+    margin-top: 16px;
+    padding: 20px;
+    background: var(--accent-soft);
+    border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+    border-radius: var(--radius);
+}
+
+.swap-form__title {
+    margin: 0 0 14px;
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--accent);
+}
+
+.swap-form__row {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.swap-form__select-group {
+    flex: 1;
+}
+
+.swap-form__arrow {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--accent);
+    padding-bottom: 10px;
+    flex: none;
+}
+
+/* --- 最後の試合カード --- */
+.last-match-card {
+    margin-bottom: 20px;
+}
+
+.last-match__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.last-match__header h3 {
+    margin: 0;
+}
+
+.last-match__scoreboard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.last-match__team {
+    text-align: center;
+    flex: 1;
+}
+
+.last-match__name {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+
+.last-match__score {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+    line-height: 1;
+}
+
+.last-match__team.is-winner .last-match__name {
+    color: var(--accent);
+    font-weight: 800;
+}
+
+.last-match__team.is-winner .last-match__score {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.last-match__vs {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--muted);
+    flex: none;
+}
+
+/* 試合完了後のアクション行 */
+.match-finished-actions {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+/* --- 印刷用スタイル --- */
+@media print {
+    /* ヘッダー・ナビ・ボタン・不要な要素を非表示にする。 */
+    .tabnav,
+    .to-top,
+    .btn-primary,
+    .btn-danger,
+    .btn-icon,
+    .btn-outline,
+    .btn-sm,
+    .btn-undo,
+    .shuffle-form,
+    .delete-form,
+    .nav-actions,
+    .play-hints,
+    .links,
+    .dashboard-link,
+    .dashboard-extra-actions,
+    .throw-panel,
+    .throw-actions,
+    .undo-form,
+    .pin-board,
+    .score-preview,
+    .turn-indicator,
+    .now-throwing,
+    .team-edit-form,
+    .swap-form-container,
+    .match-finished-actions,
+    .table-toolbar__actions,
+    .history-item__actions,
+    .history-filters,
+    .hero-banner,
+    .filter-chip,
+    #toggleEditMode {
+        display: none !important;
+    }
+
+    body {
+        background: #fff !important;
+        color: #000 !important;
+        font-size: 11pt;
+    }
+
+    .content_box, .content_box--wide {
+        max-width: 100% !important;
+        padding: 0 !important;
+    }
+
+    .card {
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+    }
+
+    .standings-table th {
+        background: #eee !important;
+        color: #000 !important;
+    }
+
+    .standings-table td,
+    .standings-table th {
+        border: 1px solid #ccc !important;
+    }
+
+    .stat-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+    }
+
+    .stat__value {
+        background: none !important;
+        -webkit-background-clip: unset !important;
+        background-clip: unset !important;
+        color: #000 !important;
+        -webkit-text-fill-color: #000 !important;
+    }
+
+    a { color: #000 !important; text-decoration: none !important; }
+}
+
+/* --- レスポンシブ強化 --- */
+@media (max-width: 600px) {
+    .table-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .swap-form__row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .swap-form__arrow {
+        text-align: center;
+        padding-bottom: 0;
+    }
+
+    .history-item__teams {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .history-team {
+        text-align: center;
+    }
+
+    .last-match__scoreboard {
+        gap: 12px;
+    }
+
+    .dashboard-extra-actions {
+        flex-direction: column;
+    }
+
+    .dashboard-extra-actions .btn-outline {
+        width: 100%;
+    }
+}
+
+/* --- チーム手動作成 & チーム個別に編集用スタイル --- */
+.team-creation-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.btn-create-manual {
+    justify-content: center;
+    padding: 12px;
+    text-align: center;
+}
+
+.team-card__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-sm--edit {
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    padding: 3px 10px;
+    font-size: 0.78rem;
+}
+
+.btn-sm--edit:hover {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+.btn-sm--danger {
+    color: var(--danger);
+    background: var(--danger-soft);
+    border: 1px solid transparent;
+}
+
+.btn-sm--danger:hover {
+    background: var(--danger);
+    color: #fff;
+}
+
+.btn-sm--active {
+    background: var(--accent-2);
+    color: #fff;
+}
+
+.btn-sm--done {
+    background: var(--bg);
+    color: var(--muted);
+}
+
+/* 既存チーム表示（手動作成画面） */
+.existing-teams-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.existing-team-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border: 1px solid var(--border-soft);
+}
+
+.existing-team-chip__count {
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+
+/* チーム詳細編集画面 (edit_team.php) */
+.edit-member-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.edit-member-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: var(--bg);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.edit-member-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.edit-member-id {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.edit-member-name {
+    font-weight: 700;
+    color: var(--text);
+}
+
+.edit-member-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.edit-member-move-form {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.edit-member-select,
+.edit-add-select {
+    width: auto !important;
+    padding: 6px 10px !important;
+    font-size: 0.85rem !important;
+    border-radius: 8px !important;
+}
+
+.edit-member-remove-form {
+    margin: 0;
+}
+
+/* --- 大会（トーナメント / ラウンドロビン）スタイル --- */
+.tournament-info {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.tournament-info__item {
+    background: var(--accent-soft);
+    border-radius: var(--radius-sm);
+    padding: 10px 6px;
+}
+
+.tournament-info__label {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.tournament-info__value {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1.2;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--bg);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.progress-bar__fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    transition: width 300ms ease;
+}
+
+.tournament-round {
+    margin-bottom: 20px;
+}
+
+.round-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    color: var(--accent);
+    border-bottom: 2px solid var(--border-soft);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+}
+
+.round-progress {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.round-complete-badge {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: var(--success);
+    font-weight: 700;
+    background: var(--success-soft);
+    padding: 3px 10px;
+    border-radius: 999px;
+}
+
+.bracket-matches {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.bracket-match {
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.bracket-match--ongoing {
+    border-left: 4px solid var(--accent-2);
+    background: var(--accent-soft);
+}
+
+.bracket-match--finished {
+    border-left: 4px solid var(--border);
+}
+
+.bracket-match--pending {
+    border-left: 4px solid var(--border-soft);
+}
+
+.bracket-match__teams {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}
+
+.bracket-team {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+}
+
+.bracket-team__name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.bracket-team.is-winner .bracket-team__name {
+    color: var(--accent);
+    font-weight: 800;
+}
+
+.bracket-team__score {
+    font-size: 1.1rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+}
+
+.bracket-team.is-winner .bracket-team__score {
+    color: var(--accent);
+}
+
+.bracket-match__vs {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-weight: 700;
+}
+
+@media (max-width: 480px) {
+    .tournament-info {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .edit-member-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .edit-member-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+/* --- 大会形式セレクタ & フットボール トーナメントツリー スタイル --- */
+.format-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.format-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px;
+    border: 2px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    cursor: pointer;
+    transition: border-color var(--duration), background var(--duration);
+}
+
+.format-option:hover {
+    background: var(--accent-soft);
+}
+
+.format-option.is-selected {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+}
+
+.format-option input[type="radio"] {
+    margin-top: 4px;
+    accent-color: var(--accent);
+}
+
+.format-option__content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.format-option__title {
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: var(--accent);
+}
+
+.format-option__desc {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.4;
+}
+
+/* フットボール ノックアウト ツリー */
+.knockout-tree {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 10px 4px 20px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.tree-round {
+    flex: 1;
+    min-width: 240px;
+    display: flex;
+    flex-direction: column;
+}
+
+.tree-round__header {
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--accent);
+    background: var(--panel-head);
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-soft);
+    margin: 0 0 16px 0;
+}
+
+.tree-round__matches {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 16px;
+    flex: 1;
+}
+
+.tree-card {
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+}
+
+.tree-card--ongoing {
+    border-left: 4px solid var(--accent-2);
+    background: var(--accent-soft);
+}
+
+.tree-card--finished {
+    border-left: 4px solid var(--border);
+}
+
+.tree-card--bye {
+    opacity: 0.65;
+    background: var(--bg);
+}
+
+.tree-card__label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+}
+
+.tree-team {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 6px;
+    border-radius: 6px;
+    background: var(--bg);
+}
+
+.tree-team.is-winner {
+    background: linear-gradient(90deg, var(--accent-soft), rgba(32, 87, 32, 0.15));
+}
+
+.tree-team__name {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tree-team.is-winner .tree-team__name {
+    color: var(--accent);
+    font-weight: 800;
+}
+
+.tree-team__score {
+    font-size: 1rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+}
+
+.tree-team.is-winner .tree-team__score {
+    color: var(--accent);
+}
+
+.tree-card__footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4px;
+}
+
+/* --- テーマ切り替え (Dark Mode & Rustic Wood) --- */
+:root[data-theme="dark"] {
+    --bg: #12181b;
+    --bg-grad: linear-gradient(180deg, #12181b 0%, #1a232a 100%);
+    --surface: #1e2932;
+    --border: #3a4b58;
+    --border-soft: #2c3a46;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --accent: #22c55e;
+    --accent-2: #10b981;
+    --accent-soft: rgba(34, 197, 94, 0.15);
+    --panel-head: #1a232a;
+    --danger: #ef4444;
+    --danger-soft: rgba(239, 68, 68, 0.15);
+    --success: #22c55e;
+    --success-soft: rgba(34, 197, 94, 0.15);
+}
+
+:root[data-theme="wood"] {
+    --bg: #f4ede2;
+    --bg-grad: linear-gradient(180deg, #f4ede2 0%, #e8dccb 100%);
+    --surface: #fffcf7;
+    --border: #a67c52;
+    --border-soft: #cbb497;
+    --text: #3d2b1f;
+    --muted: #7c624c;
+    --accent: #8b5a2b;
+    --accent-2: #b87333;
+    --accent-soft: #f0e6d8;
+    --panel-head: #e8d7c3;
+    --danger: #b22222;
+    --danger-soft: #fbe8e8;
+    --success: #2e8b57;
+    --success-soft: #e8f5e9;
+}
+
+.tabnav__theme-btn {
+    margin-left: auto;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border: 1px solid var(--border-soft);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background var(--duration), color var(--duration);
+}
+
+.tabnav__theme-btn:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* 試合ツールの配置 */
+.match-tools-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.match-timer-badge {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+}
+
+.match-audio-controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* 実況 プレイバイプレイ タイムライン */
+.play-by-play-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.play-log-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    border-left: 3px solid var(--accent);
+}
+
+.play-log-item--miss {
+    border-left-color: var(--danger);
+    opacity: 0.8;
+}
+
+.play-log-time {
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.play-log-player {
+    color: var(--text);
+}
+
+.play-log-detail {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.play-log-item--miss .play-log-detail {
+    color: var(--danger);
+}
+
+.play-log-score {
+    margin-left: auto;
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+/* スキットル命中チャート (stats.php) */
+.skittle-chart-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 8px;
+    align-items: flex-end;
+    height: 180px;
+    padding-top: 20px;
+}
+
+.skittle-bar-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.skittle-bar-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background: var(--bg);
+    border-radius: 6px 6px 0 0;
+    overflow: hidden;
+}
+
+.skittle-bar-fill {
+    width: 100%;
+    background: linear-gradient(180deg, var(--accent-2), var(--accent));
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 4px;
+    transition: height 300ms ease;
+}
+
+.skittle-bar-count {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #fff;
+}
+
+.skittle-bar-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--muted);
+    margin-top: 6px;
+}
+
+/* Form Guide Badges */
+.form-guide-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-guide-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-soft);
+}
+
+.form-guide-team {
+    font-weight: 700;
+    color: var(--text);
+}
+
+.form-guide-badges {
+    display: flex;
+    gap: 6px;
+}
+
+.form-badge {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #fff;
+}
+
+.form-badge--w {
+    background: var(--success);
+}
+
+.form-badge--l {
+    background: #c9821f;
+}
+
+.form-badge--none {
+    width: auto;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: var(--border-soft);
+    color: var(--muted);
+    font-size: 0.75rem;
+}

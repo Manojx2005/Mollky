@@ -1,0 +1,24 @@
+# Environment & OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+*.bak
+*.swp
+*.log
+
+# IDE & Editor configurations
+.vscode/
+.idea/
+.claude/
+.gemini/
+*.sublime-project
+*.sublime-workspace
+
+# Database temporary journal files (keep molkky.sqlite tracked if desired, ignore WAL & journals)
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+
+# Generated exports
+molkky_*.csv
