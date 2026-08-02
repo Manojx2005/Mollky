@@ -236,7 +236,7 @@
     if (/[?&]demo=1/.test(location.search)) {
         render({
             state: 'live', target: 50, maxMisses: 3,
-            currentPlayer: 'アウン　ジン　ミョー',
+            currentPlayer: '田中　太郎',
             team1: { name: 'Team 1', score: 34, misses: 1, active: true,  winner: false },
             team2: { name: 'Team 2', score: 28, misses: 0, active: false, winner: false }
         });
