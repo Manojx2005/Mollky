@@ -1,0 +1,620 @@
+/* ==========================================================================
+   site.css — 公開ページ（ホーム / ルール）用スタイル
+   元の molkky デザイン（home.css / style.css）をそのまま踏襲し、
+   共有ヘッダー(style.css)と併用するため .site 配下にスコープしている。
+   ========================================================================== */
+
+.site {
+    background: #ffffff;
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+    color: #33352f;
+    line-height: 1.85;
+}
+
+/* バナー: 画像全体を表示（切り抜かない） */
+.site-banner {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* ----- レイアウト ----- */
+.site .section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 8px 40px 44px;
+}
+
+.site .page-title {
+    display: block;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 800;
+    color: #2f7d32;
+    letter-spacing: 0.06em;
+    padding: 46px 20px 34px;
+    border: 0;
+}
+
+.site .sec-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+    font-size: 22px;
+    font-weight: 800;
+    color: #33352f;
+    margin: 34px 0 22px;
+}
+
+.site .sec-head::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 24px;
+    border-radius: 2px;
+    background: #2f7d32;
+}
+
+/* ----- ホーム: 3大魅力カード ----- */
+.site .card-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+.site .card {
+    flex: 1;
+    border-radius: 20px;
+    padding: 44px;
+    border: 1px solid #e4e0d3;
+    background: #ffffff;
+    box-shadow: none;
+    margin: 0;
+}
+
+.site .card.green {
+    background: #eaf4ea;
+}
+
+.site .card.yellow {
+    background: #fdf3dc;
+}
+
+.site .card.pink {
+    background: #fbeceb;
+}
+
+.site .card-title {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+.site .card-title img {
+    width: 82px;
+    height: auto;
+}
+
+.site .card-title h2 {
+    text-align: left;
+    margin: 0;
+    font-size: 26px;
+    font-weight: 800;
+}
+
+.site .card.green h2 {
+    color: #2f7d32;
+}
+
+.site .card.yellow h2 {
+    color: #c18b00;
+}
+
+.site .card.pink h2 {
+    color: #8e2424;
+}
+
+.site .card p {
+    font-size: 17px;
+    line-height: 1.8;
+    margin: 0;
+}
+
+/* ----- ホーム: ニュース ----- */
+.site .news-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+.site .news-card {
+    background: #fbfaf5;
+    border: 1px solid #e4e0d3;
+    border-radius: 14px;
+    padding: 24px 26px;
+}
+
+.site .news-date {
+    display: inline-block;
+    background: #eaf4ea;
+    color: #2f7d32;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+}
+
+.site .news-card h3 {
+    text-align: left;
+    font-size: 18px;
+    font-weight: 800;
+    color: #33352f;
+    margin: 0 0 10px;
+    line-height: 1.5;
+}
+
+.site .news-card p {
+    font-size: 15px;
+    color: #4a4b47;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* ----- ホーム: チーム ----- */
+.site .team-group {
+    margin-bottom: 36px;
+}
+
+.site .team-group:last-child {
+    margin-bottom: 0;
+}
+
+.site .team-group-title {
+    text-align: left;
+    font-size: 15px;
+    font-weight: 800;
+    color: #2f7d32;
+    letter-spacing: 0.08em;
+    margin: 0 0 14px;
+    padding-left: 2px;
+}
+
+.site .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+}
+
+.site .team-card {
+    background: #fbfaf5;
+    border: 1px solid #e4e0d3;
+    border-radius: 14px;
+    padding: 22px 12px;
+    text-align: center;
+    box-shadow: none;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform .25s, box-shadow .25s;
+}
+
+.site .team-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.07);
+}
+
+.site .avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+}
+
+.site .member-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #33352f;
+    margin: 0 0 10px;
+}
+
+.site .member-role {
+    display: inline-block;
+    margin-top: auto;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    padding: 3px 11px;
+    border-radius: 20px;
+}
+
+.site .leadership .avatar {
+    background: #2f7d32;
+}
+
+.site .leadership .member-role {
+    background: #eaf4ea;
+    color: #2f7d32;
+}
+
+.site .design .avatar {
+    background: #b3466f;
+}
+
+.site .design .member-role {
+    background: #fbeceb;
+    color: #8e2424;
+}
+
+.site .program .avatar {
+    background: #c18b00;
+}
+
+.site .program .member-role {
+    background: #fdf3dc;
+    color: #c18b00;
+}
+
+.site .video .avatar {
+    background: #3a5a9e;
+}
+
+.site .video .member-role {
+    background: #e9edfa;
+    color: #3a5a9e;
+}
+
+/* ----- ルール: 共通 ----- */
+.site .lead {
+    font-size: 17px;
+    color: #272825;
+    margin: 0 0 24px;
+    max-width: 560px;
+}
+
+.site .accent {
+    color: #215c24;
+    font-weight: 800;
+}
+
+.site .grid {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 34px;
+    align-items: start;
+}
+
+.site .sub-head {
+    font-size: 22px;
+    font-weight: 700;
+    color: #33352f;
+    border-bottom: 2px solid #e4e0d3;
+    padding-bottom: 10px;
+    margin: 8px 0 18px;
+}
+
+/* 道具カード */
+.site .equip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin: 22px 0;
+}
+
+.site .equip .card {
+    flex: 1;
+    min-width: 150px;
+    border: 1px solid #e4e0d3;
+    border-radius: 10px;
+    padding: 16px 16px 18px;
+    background: #fff;
+}
+
+.site .equip .tag {
+    display: inline-block;
+    font-size: 15px;
+    color: #353634;
+    border: 1px solid #e4e0d3;
+    border-radius: 5px;
+    padding: 2px 8px;
+    margin-bottom: 12px;
+}
+
+.site .equip .name {
+    font-size: 19px;
+    font-weight: 800;
+    color: #2f7d32;
+    margin-bottom: 8px;
+}
+
+.site .equip .desc {
+    font-size: 15px;
+    color: #212120;
+    line-height: 1.7;
+}
+
+.site .equip .desc b {
+    color: #d0453f;
+    font-weight: 800;
+}
+
+/* 投擲フォームのリスト */
+.site ul.forms {
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 0;
+}
+
+.site ul.forms li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 14px;
+    font-size: 17px;
+    color: #20201f;
+}
+
+.site ul.forms li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #7cb342;
+}
+
+.site ul.forms b {
+    color: #215c24;
+}
+
+/* メディア（画像・動画） */
+.site .media {
+    border: 1px solid #e4e0d3;
+    border-radius: 12px;
+    background: #fbfaf5;
+    overflow: hidden;
+    width: 700px;
+    max-width: 100%;
+    margin-bottom: 22px;
+}
+
+.site .video {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    aspect-ratio: 16 / 10;
+    background: #f1efe7;
+    color: #6b6f66;
+    font-size: 11.5px;
+    text-align: center;
+    padding: 0 20px;
+    padding: 10px;
+}
+
+.site .play {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #2f7d32;
+}
+
+.site .play::after {
+    content: "";
+    margin-left: 4px;
+    border-left: 14px solid #fff;
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+}
+
+.site .media img {
+    width: 100%;
+    display: block;
+}
+
+.site .media .cap {
+    font-size: 15px;
+    color: #292a27;
+    padding: 10px 14px;
+    line-height: 1.6;
+}
+
+/* 「倒れた」判定 NG / OK */
+.site .edge {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 18px 0;
+}
+
+.site .edge .box {
+    border-radius: 10px;
+    padding: 16px 18px;
+}
+
+.site .edge .box.no {
+    background: #fbeceb;
+    border: 1px solid #f3d3d1;
+}
+
+.site .edge .box.ok {
+    background: #eaf4ea;
+    border: 1px solid #cde3ce;
+}
+
+.site .edge .box .t {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14.5px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.site .edge .box.no .t {
+    color: #d0453f;
+}
+
+.site .edge .box.ok .t {
+    color: #3f9142;
+}
+
+.site .edge .box .t img {
+    width: 18px;
+    height: 18px;
+}
+
+.site .edge .box p {
+    font-size: 15px;
+    color: #2c2e2b;
+    margin: 0;
+}
+
+/* 立て直しヒント（元の青いボックス） */
+.site .tip {
+    background: #eef4fb;
+    border: 1px solid #d5e4f2;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-top: 6px;
+}
+
+.site .tip .t {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 800;
+    color: #4f8fd1;
+    margin-bottom: 8px;
+}
+
+.site .tip .t img {
+    width: 18px;
+    height: 18px;
+}
+
+.site .tip p {
+    font-size: 15px;
+    color: #2c2d2a;
+    margin: 0;
+}
+
+/* 得点ルール */
+.site .score-rule {
+    margin: 14px 0 4px;
+}
+
+.site .score-rule p {
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+.site .score-rule b {
+    color: #215c24;
+}
+
+/* ペナルティ（元の黄色い帯） */
+.site .penalty {
+    border-left: 5px solid #e3a72f;
+    background: #fdf3dc;
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+}
+
+.site .penalty .t {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 800;
+    color: #33352f;
+    margin-bottom: 8px;
+}
+
+.site .penalty .t img {
+    width: 20px;
+    height: 20px;
+}
+
+.site .penalty p {
+    font-size: 15px;
+    color: #2a2b29;
+    margin: 0;
+}
+
+.site .penalty b {
+    color: #d0453f;
+    font-weight: 800;
+}
+
+/* ----- フッター（元の黒） ----- */
+.site .site-footer {
+    background: #000;
+    color: #fff;
+    margin-top: 60px;
+}
+
+.site .footer-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+.site .footer-container p {
+    font-size: 18px;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+/* ----- レスポンシブ ----- */
+@media (max-width: 900px) {
+    .site .card-container {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 760px) {
+    .site .section {
+        padding: 8px 22px 34px;
+    }
+
+    .site .page-title {
+        font-size: 23px;
+        padding: 34px 16px 24px;
+    }
+
+    .site .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .site .edge {
+        grid-template-columns: 1fr;
+    }
+
+    .site .card-title {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .site .news-grid {
+        grid-template-columns: 1fr;
+    }
+}
